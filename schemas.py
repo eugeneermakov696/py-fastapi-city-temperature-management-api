@@ -5,6 +5,8 @@ from typing import Optional
 class CityBase(BaseModel):
     name: str
     additional_info: Optional[str] = None
+    latitude: Optional[float] = None
+    longitude: Optional[float] = None
 
 class CityCreate(CityBase):
     pass

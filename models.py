@@ -4,14 +4,14 @@ from .database import Base
 import datetime
 
 class City(Base):
-    tablename = "cities"
+    __tablename__ = "cities"
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, unique=True, index=True, nullable=False)
     additional_info = Column(String, nullable=True)
     temperatures = relationship("Temperature", back_populates="city")
 
 class Temperature(Base):
-    tablename = "temperatures"
+    __tablename__ = "temperatures"
     id = Column(Integer, primary_key=True, index=True)
     city_id = Column(Integer, ForeignKey("cities.id"))
     date_time = Column(DateTime, default=datetime.datetime.utcnow)
