@@ -4,16 +4,28 @@ from .database import Base
 import datetime
 
 class City(Base):
-    __tablename__ = "cities"
+    tablename = "cities"
+
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, unique=True, index=True, nullable=False)
     additional_info = Column(String, nullable=True)
-    temperatures = relationship("Temperature", back_populates="city")
+
+    latitude = Column(Float, nullable=True)
+    longitude = Column(Float, nullable=True)
+
+    temperatures = relationship(
+        "Temperature",
+        back_populates="city",
+        cascade="all, delete-orphan"
+    )
+
 
 class Temperature(Base):
-    __tablename__ = "temperatures"
+    tablename = "temperatures"
+
     id = Column(Integer, primary_key=True, index=True)
     city_id = Column(Integer, ForeignKey("cities.id"))
     date_time = Column(DateTime, default=datetime.datetime.utcnow)
     temperature = Column(Float, nullable=False)
+
     city = relationship("City", back_populates="temperatures")
